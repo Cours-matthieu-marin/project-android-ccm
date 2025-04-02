@@ -1,4 +1,4 @@
-package fr.upjv.project_android_ccm.ui.viewmodel;
+package fr.upjv.project_android_ccm.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 import fr.upjv.project_android_ccm.data.repository.FirebaseAuthRepository;
