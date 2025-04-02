@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C7ECCE"
+    android:padding="16dp">
+
+    <!-- Logo et nom de l'application -->
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/ic_marcopolo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/appNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MarcoPoloGo"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- "Bloc" Inscription avec fond arrondi (facultatif) -->
+    <RelativeLayout
+        android:id="@+id/inscriptionContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#8FB19D"
+        android:padding="16dp"
+        android:layout_margin="16dp"
+        android:clipToOutline="true"
+        app:layout_constraintTop_toBottomOf="@id/appNameTextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.8">
+
+        <TextView
+            android:id="@+id/inscriptionTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="INSCRIPTION"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/pseudonymeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inscriptionTitleTextView"
+            android:layout_marginTop="24dp"
+            android:hint="Pseudonyme"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/motDePasseEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pseudonymeEditText"
+            android:layout_marginTop="16dp"
+            android:hint="Mot de passe"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/inscriptionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/motDePasseEditText"
+            android:layout_marginTop="24dp"
+            android:layout_centerHorizontal="true"
+            android:text="INSCRIPTION" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
