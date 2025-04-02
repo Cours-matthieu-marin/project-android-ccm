@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textColor="#FFF"
+            android:textColor="@color/white"
             android:text="CONNEXION"
             android:textSize="35sp"
             android:textStyle="bold" />
@@ -52,9 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/inscriptionTitleTextView"
-            android:layout_marginTop="26dp"
-            android:text="Pseudonyme:"
-            android:textColor="#FFF"
+            android:layout_marginTop="15dp"
+            android:text="Pseudonyme :"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pseudonymeText"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/ic_input_field"
             android:inputType="textPersonName" />
 
@@ -72,9 +72,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pseudonymeEditText"
-            android:layout_marginTop="26dp"
-            android:text="Mots de passe::"
-            android:textColor="#FFF"
+            android:layout_marginTop="15dp"
+            android:text="Mots de passe :"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -82,8 +82,8 @@
             android:id="@+id/motDePasseEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pseudonymeEditText"
-            android:layout_marginTop="59dp"
+            android:layout_below="@+id/passwordText"
+            android:layout_marginTop="5dp"
             android:background="@drawable/ic_input_field"
             android:inputType="textPassword" />
 
