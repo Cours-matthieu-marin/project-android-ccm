@@ -3,6 +3,7 @@ package fr.upjv.project_android_ccm.data.model;
 import java.time.LocalDateTime;
 
 public class Location {
+    private String id;
     private double latitude;
     private double longitude;
     private LocalDateTime date;
@@ -49,5 +50,9 @@ public class Location {
 
     public void setIdVoyage(String idVoyage) {
         this.idVoyage = idVoyage;
+    }
+
+    public String getId() {
+        return id;
     }
 }
