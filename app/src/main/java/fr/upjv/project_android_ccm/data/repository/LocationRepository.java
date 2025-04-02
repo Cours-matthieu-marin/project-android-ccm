@@ -46,7 +46,7 @@ public class LocationRepository {
     }
 
     public void saveLocation(Location location, final OnCompleteListener onComplete) {
-        db.collection(locationsCollection).document(location.getIdVoyage())
+        db.collection(locationsCollection).document(location.getId())
                 .set(location, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

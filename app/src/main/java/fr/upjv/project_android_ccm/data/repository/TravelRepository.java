@@ -46,7 +46,7 @@ public class TravelRepository {
     }
 
     public void saveTravel(Travel travel, final OnCompleteListener onComplete) {
-        db.collection(travelsCollection).document(travel.getName())
+        db.collection(travelsCollection).document(travel.getId())
                 .set(travel, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

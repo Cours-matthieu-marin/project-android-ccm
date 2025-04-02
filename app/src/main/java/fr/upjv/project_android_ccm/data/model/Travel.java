@@ -1,10 +1,11 @@
 package fr.upjv.project_android_ccm.data.model;
 
 public class Travel {
+    private String id;
     private String name;
     private String idUser;
 
-    public Travel(String name, String idUser) {
+    public Travel(String id, String name, String idUser) {
         this.name = name;
         this.idUser = idUser;
     }
@@ -23,5 +24,9 @@ public class Travel {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String getId() {
+        return id;
     }
 }
