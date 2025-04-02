@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import fr.upjv.project_android_ccm.R;
-import fr.upjv.project_android_ccm.ui.viewmodel.AuthViewModel;
+import fr.upjv.project_android_ccm.viewmodel.AuthViewModel;
 
 public class AuthActivity extends AppCompatActivity {
     private AuthViewModel authViewModel;
@@ -17,10 +17,10 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_auth);
 
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-
+        /*
         EditText emailEditText = findViewById(R.id.email);
         EditText passwordEditText = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.login_button);
@@ -39,6 +39,7 @@ public class AuthActivity extends AppCompatActivity {
             });
         });
 
+
         registerButton.setOnClickListener(view -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
@@ -51,5 +52,7 @@ public class AuthActivity extends AppCompatActivity {
                 }
             });
         });
+
+         */
     }
 }

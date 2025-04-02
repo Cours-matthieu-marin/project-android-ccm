@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_up"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Backgroundframe"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="207dp"
+        android:layout_height="207dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/inscriptionContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_background_auth"
+        android:clipToOutline="true"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"
+        app:layout_constraintVertical_bias="0.308"
+        app:layout_constraintWidth_percent="0.8">
+
+        <TextView
+            android:id="@+id/inscriptionTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="#FFF"
+            android:text="INSCRIPTION"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/pseudonymeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/inscriptionTitleTextView"
+            android:layout_marginTop="26dp"
+            android:text="Pseudonyme:"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/pseudonymeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pseudonymeText"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/ic_input_field"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/passwordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pseudonymeEditText"
+            android:layout_marginTop="26dp"
+            android:text="Mots de passe::"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/motDePasseEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pseudonymeEditText"
+            android:layout_marginTop="59dp"
+            android:background="@drawable/ic_input_field"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/inscriptionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/motDePasseEditText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:textSize="20sp"
+            android:background="@drawable/ic_submit_auth"
+            android:text="INSCRIPTION" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
