@@ -17,12 +17,12 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth);
-
-        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        setContentView(R.layout.activity_sign_in);
         /*
-        EditText emailEditText = findViewById(R.id.email);
-        EditText passwordEditText = findViewById(R.id.password);
+        authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
+        EditText pseudoEditText = findViewById(R.id.pseudonymeEditText);
+        EditText passwordEditText = findViewById(R.id.motDePasseEditText);
         Button loginButton = findViewById(R.id.login_button);
         Button registerButton = findViewById(R.id.register_button);
 
