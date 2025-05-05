@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sign_up"
+    android:id="@+id/resgisterButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Backgroundframe"
@@ -42,8 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:text="CONNEXION"
+            android:textColor="#FFF"
+            android:text="INSCRIPTION"
             android:textSize="35sp"
             android:textStyle="bold" />
 
@@ -52,9 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/inscriptionTitleTextView"
-            android:layout_marginTop="15dp"
-            android:text="Pseudonyme :"
-            android:textColor="@color/white"
+            android:layout_marginTop="26dp"
+            android:text="Pseudonyme:"
+            android:textColor="#FFF"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pseudonymeText"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/ic_input_field"
             android:inputType="textPersonName" />
 
@@ -72,9 +72,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pseudonymeEditText"
-            android:layout_marginTop="15dp"
-            android:text="Mots de passe :"
-            android:textColor="@color/white"
+            android:layout_marginTop="26dp"
+            android:text="Mots de passe::"
+            android:textColor="#FFF"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -82,13 +82,13 @@
             android:id="@+id/motDePasseEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/passwordText"
-            android:layout_marginTop="5dp"
+            android:layout_below="@+id/pseudonymeEditText"
+            android:layout_marginTop="59dp"
             android:background="@drawable/ic_input_field"
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/inscriptionButton"
+            android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/motDePasseEditText"
@@ -96,7 +96,7 @@
             android:layout_marginTop="35dp"
             android:textSize="20sp"
             android:background="@drawable/ic_submit_auth"
-            android:text="CONNEXION" />
+            android:text="INSCRIPTION" />
 
     </RelativeLayout>
 
