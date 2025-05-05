@@ -8,4 +8,5 @@
     <color name="validate">#618B4A</color>
     <color name="photobackground">#9DEADC</color>
     <color name="deletebutton">#E31A1A</color>
+    <color name="white">#FFF</color>
 </resources>
