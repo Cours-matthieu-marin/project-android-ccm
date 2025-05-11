@@ -2,11 +2,20 @@ package fr.upjv.project_android_ccm.data.model;
 
 public class User {
     private String id;
+    private String email;
     private String pseudo;
     private String friendCode;
 
-    public User(String id, String pseudo, String friendCode) {
+    public User(String id, String email, String pseudo, String friendCode) {
         this.id = id;
+        this.email = email;
+        this.pseudo = pseudo;
+        this.friendCode = friendCode;
+    }
+    public User() {
+    }
+    public User(String email, String pseudo, String friendCode) {
+        this.email = email;
         this.pseudo = pseudo;
         this.friendCode = friendCode;
     }
@@ -29,5 +38,13 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

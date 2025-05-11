@@ -15,7 +15,7 @@
         android:layout_height="207dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/inscriptionTitleTextView"
             android:layout_marginTop="15dp"
-            android:text="Pseudonyme :"
+            android:text="Email :"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -98,6 +98,21 @@
             android:background="@drawable/ic_submit_auth"
             android:text="CONNEXION" />
 
+
+
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/toRegisterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_submit_auth"
+        android:text="pas encore inscrit ?"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/logoImageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

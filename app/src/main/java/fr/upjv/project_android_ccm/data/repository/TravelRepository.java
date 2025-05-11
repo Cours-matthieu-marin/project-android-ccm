@@ -1,13 +1,17 @@
 package fr.upjv.project_android_ccm.data.repository;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.upjv.project_android_ccm.data.model.Travel;
 
@@ -45,21 +49,32 @@ public class TravelRepository {
         return travelData;
     }
 
-    public void saveTravel(Travel travel, final OnCompleteListener onComplete) {
-        db.collection(travelsCollection).document(travel.getId())
-                .set(travel, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        onComplete.onComplete(true);
+    public LiveData<List<Travel>> getUnfinishedTravelsByUser(String userId) {
+        MutableLiveData<List<Travel>> travelListData = new MutableLiveData<>();
+        Log.d("repo", "1");
+        db.collection(travelsCollection)
+                .whereEqualTo("userId", userId)
+                .whereEqualTo("endDate", null)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    Log.d("repo", "2");
+                    List<Travel> travels = new ArrayList<>();
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        Travel travel = doc.toObject(Travel.class);
+                        if (travel != null) {
+                            travels.add(travel);
+                        }
                     }
+                    travelListData.setValue(travels);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        onComplete.onComplete(false);
-                    }
-                });
+                .addOnFailureListener(e -> travelListData.setValue(null));
+
+        return travelListData;
+    }
+
+
+    public void addTravel(Travel travel) {
+        db.collection(travelsCollection).add(travel);
     }
 
     public interface OnCompleteListener {
