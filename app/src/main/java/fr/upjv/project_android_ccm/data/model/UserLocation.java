@@ -2,18 +2,23 @@ package fr.upjv.project_android_ccm.data.model;
 
 import java.time.LocalDateTime;
 
-public class Location {
+public class UserLocation {
     private String id;
     private double latitude;
     private double longitude;
-    private LocalDateTime date;
+    private String date;
     private String idVoyage;
 
-    public Location(double latitude, double longitude, LocalDateTime date, String idVoyage) {
+    public UserLocation(double latitude, double longitude, String date, String idVoyage) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.date = date;
         this.idVoyage = idVoyage;
+    }
+
+    public UserLocation(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public double getLatitude() {
@@ -32,16 +37,16 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
     public void setNowDate() {
-        this.date = LocalDateTime.now();
+        this.date = LocalDateTime.now().toString();
     }
 
     public String getIdVoyage() {
