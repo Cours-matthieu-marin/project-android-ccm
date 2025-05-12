@@ -65,7 +65,6 @@ public class LocationService extends Service {
             try {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    Log.e("service", "Permissions non accordées !");
                     return;
                 }
 
@@ -104,7 +103,7 @@ public class LocationService extends Service {
                 e.printStackTrace();
             }
 
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 5, TimeUnit.MINUTES);
 
         createNotification();
         return START_STICKY;
@@ -115,7 +114,7 @@ public class LocationService extends Service {
         int notificationId = 123;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelName = "PerdPasLeNor";
+            String channelName = "marcopologo";
             NotificationChannel channel = new NotificationChannel(channelId, channelName,
                     NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = getSystemService(NotificationManager.class);
@@ -140,14 +139,10 @@ public class LocationService extends Service {
         UserRepository userRepository = new UserRepository();
         TravelRepository travelRepository = new TravelRepository();
         LocationRepository locationRepository = new LocationRepository();
-        Log.d("service", "1");
         LiveData<User> user = userRepository.getUser(Objects.requireNonNull(sharedPreferences.getString("email", null)));
-        Log.d("service", "2");
-        Log.d("service", user.getValue().toString());
         LiveData<List<Travel>>  travels = travelRepository.getUnfinishedTravelsByUser(Objects.requireNonNull(user.getValue()).getId());
-        Log.d("service", "3");
-        for (Travel travel : Objects.requireNonNull(travels.getValue())){
 
+        for (Travel travel : Objects.requireNonNull(travels.getValue())){
             locationRepository.addLocation(
                     new UserLocation(
                             locationData.getLatitude(),
@@ -159,20 +154,40 @@ public class LocationService extends Service {
         }
     }
 
-    private boolean checkRequirement(){
+    private boolean checkRequirement() {
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
 
         boolean fineLocationPermission = ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (fineLocationPermission) {
+            Log.d("CheckRequirement", "Fine location permission is granted");
+        }
+
         boolean coarseLocationPermission = ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (coarseLocationPermission) {
+            Log.d("CheckRequirement", "Coarse location permission is granted");
+        }
+
         boolean internetPermission = ContextCompat.checkSelfPermission(
                 this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
+        if (internetPermission) {
+            Log.d("CheckRequirement", "Internet permission is granted");
+        }
 
         String email = sharedPreferences.getString("email", null);
         boolean emailNotExist = (email == null) || email.isBlank() || email.isEmpty();
+        if (!emailNotExist) {
+            Log.d("CheckRequirement", "Email exists and is valid: " + email);
+        }
+
+        if (!isRunning) {
+            Log.d("CheckRequirement", "Service is not running");
+        }
+
         return internetPermission && fineLocationPermission && coarseLocationPermission && !emailNotExist && !isRunning;
     }
+
 
     @Nullable
     @Override

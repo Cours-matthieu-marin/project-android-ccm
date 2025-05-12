@@ -26,7 +26,6 @@ public class TravelRepository {
 
     public LiveData<Travel> getTravel(String travelId) {
         final MutableLiveData<Travel> travelData = new MutableLiveData<>();
-
         db.collection(travelsCollection).document(travelId).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -51,13 +50,11 @@ public class TravelRepository {
 
     public LiveData<List<Travel>> getUnfinishedTravelsByUser(String userId) {
         MutableLiveData<List<Travel>> travelListData = new MutableLiveData<>();
-        Log.d("repo", "1");
         db.collection(travelsCollection)
                 .whereEqualTo("userId", userId)
                 .whereEqualTo("endDate", null)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    Log.d("repo", "2");
                     List<Travel> travels = new ArrayList<>();
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         Travel travel = doc.toObject(Travel.class);

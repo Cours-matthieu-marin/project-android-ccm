@@ -39,7 +39,6 @@ public class UserRepository {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Erreur lors de la récupération de l'utilisateur", e);
                     userData.setValue(null);
                 });
 

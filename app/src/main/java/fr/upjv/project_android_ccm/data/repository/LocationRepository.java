@@ -49,7 +49,6 @@ public class LocationRepository {
 
 
     public void addLocation(UserLocation location) {
-        Log.d("location", "ça enregistre ici");
         db.collection(locationsCollection).add(location);
     }
 
