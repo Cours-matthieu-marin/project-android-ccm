@@ -6,10 +6,10 @@ public class UserLocation {
     private String id;
     private double latitude;
     private double longitude;
-    private LocalDateTime date;
+    private String date;
     private String idVoyage;
 
-    public UserLocation(double latitude, double longitude, LocalDateTime date, String idVoyage) {
+    public UserLocation(double latitude, double longitude, String date, String idVoyage) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.date = date;
@@ -37,16 +37,16 @@ public class UserLocation {
         this.longitude = longitude;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
     public void setNowDate() {
-        this.date = LocalDateTime.now();
+        this.date = LocalDateTime.now().toString();
     }
 
     public String getIdVoyage() {

@@ -7,15 +7,16 @@ public class Travel {
     private String id;
     private String name;
     private String idUser;
-    private LocalDateTime dateStart;
-    private LocalDateTime dateEnd;
+    private String dateStart;
+    private String dateEnd;
 
-    public Travel(String name, String idUser, LocalDateTime dateStart, LocalDateTime dateEnd) {
+    public Travel(String name, String idUser,String dateStart, String dateEnd) {
         this.name = name;
         this.idUser = idUser;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
     }
+    public Travel() {}
 
     public String getName() {
         return name;
@@ -37,19 +38,19 @@ public class Travel {
         return id;
     }
 
-    public LocalDateTime getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(LocalDateTime dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
-    public LocalDateTime getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(LocalDateTime dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 }

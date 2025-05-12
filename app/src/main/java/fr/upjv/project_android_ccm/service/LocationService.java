@@ -139,19 +139,27 @@ public class LocationService extends Service {
         UserRepository userRepository = new UserRepository();
         TravelRepository travelRepository = new TravelRepository();
         LocationRepository locationRepository = new LocationRepository();
-        LiveData<User> user = userRepository.getUser(Objects.requireNonNull(sharedPreferences.getString("email", null)));
-        LiveData<List<Travel>>  travels = travelRepository.getUnfinishedTravelsByUser(Objects.requireNonNull(user.getValue()).getId());
+        userRepository.getUser(sharedPreferences.getString("email", null), (User userDb) -> {
+            if (userDb.getId() == null) {
+                Log.e("service", "User is null!");
+                return;
+            }
 
-        for (Travel travel : Objects.requireNonNull(travels.getValue())){
-            locationRepository.addLocation(
-                    new UserLocation(
-                            locationData.getLatitude(),
-                            locationData.getLongitude(),
-                            LocalDateTime.now(),
-                            travel.getId()
-                    )
-            );
-        }
+            travelRepository.getUnfinishedTravelsByUser(userDb.getId(), (List<Travel> travelsDb) -> {
+                for (Travel travel : travelsDb) {
+                    locationRepository.addLocation(
+                            new UserLocation(
+                                    locationData.getLatitude(),
+                                    locationData.getLongitude(),
+                                    LocalDateTime.now().toString(),
+                                    travel.getId()
+                            )
+                    );
+                }
+            });
+        });
+
+
     }
 
     private boolean checkRequirement() {
