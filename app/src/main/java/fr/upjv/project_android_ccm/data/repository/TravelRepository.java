@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import fr.upjv.project_android_ccm.data.model.Travel;
 
@@ -49,25 +50,49 @@ public class TravelRepository {
         return travelData;
     }
 
-    public LiveData<List<Travel>> getUnfinishedTravelsByUser(String userId) {
+    public LiveData<List<Travel>> getUnfinishedTravelsByUser(String userId, Consumer<List<Travel>> callback) {
         MutableLiveData<List<Travel>> travelListData = new MutableLiveData<>();
-        Log.d("repo", "1");
+        Log.d("repo", "1 - Récupération des voyages pour l'utilisateur : " + userId);
+
+        if (userId == null || userId.isEmpty()) {
+            Log.e("repo", "L'ID utilisateur est invalide !");
+            travelListData.setValue(null);  // Retourne null si l'ID utilisateur est invalide
+            return travelListData;
+        }
+
         db.collection(travelsCollection)
-                .whereEqualTo("userId", userId)
-                .whereEqualTo("endDate", null)
+                .whereEqualTo("idUser", userId)
+                .whereEqualTo("dateEnd", null)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    Log.d("repo", "2");
+                    Log.d("repo", "2 - Récupération réussie des voyages. Nombre de documents : " + queryDocumentSnapshots.size());
+
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        Log.d("repo", "Aucun voyage trouvé pour l'utilisateur avec ID : " + userId);
+                        travelListData.setValue(new ArrayList<>());  // Retourne une liste vide si aucun voyage n'est trouvé
+                        return;
+                    }
+
                     List<Travel> travels = new ArrayList<>();
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         Travel travel = doc.toObject(Travel.class);
                         if (travel != null) {
                             travels.add(travel);
+                        } else {
+                            Log.w("repo", "Voyage null détecté dans les résultats pour l'utilisateur avec ID : " + userId);
                         }
                     }
+                    Log.d("repo", "3 - Voyages récupérés : " + travels.size());
                     travelListData.setValue(travels);
+
+                    // Appelle le callback avec les voyages récupérés
+                    callback.accept(travels);
                 })
-                .addOnFailureListener(e -> travelListData.setValue(null));
+                .addOnFailureListener(e -> {
+                    Log.e("repo", "Erreur lors de la récupération des voyages pour l'utilisateur : " + userId, e);
+                    travelListData.setValue(null);  // Retourne null en cas d'erreur
+                    callback.accept(null);  // Appelle le callback avec null en cas d'échec
+                });
 
         return travelListData;
     }

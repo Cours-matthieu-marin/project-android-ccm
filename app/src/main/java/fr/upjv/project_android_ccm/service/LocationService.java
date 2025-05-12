@@ -141,22 +141,32 @@ public class LocationService extends Service {
         TravelRepository travelRepository = new TravelRepository();
         LocationRepository locationRepository = new LocationRepository();
         Log.d("service", "1");
-        LiveData<User> user = userRepository.getUser(Objects.requireNonNull(sharedPreferences.getString("email", null)));
-        Log.d("service", "2");
-        Log.d("service", user.getValue().toString());
-        LiveData<List<Travel>>  travels = travelRepository.getUnfinishedTravelsByUser(Objects.requireNonNull(user.getValue()).getId());
-        Log.d("service", "3");
-        for (Travel travel : Objects.requireNonNull(travels.getValue())){
+        userRepository.getUser(sharedPreferences.getString("email", null), (User userDb) -> {
+            Log.d("service", "2");
+            if (userDb.getId() == null) {
+                Log.e("service", "User is null!");
+                return;
+            }
+            Log.d("service", userDb.getId());
 
-            locationRepository.addLocation(
-                    new UserLocation(
-                            locationData.getLatitude(),
-                            locationData.getLongitude(),
-                            LocalDateTime.now(),
-                            travel.getId()
-                    )
-            );
-        }
+            travelRepository.getUnfinishedTravelsByUser(userDb.getId(), (List<Travel> travelsDb) -> {
+                Log.d("service", "3");
+                Log.d("service", travelsDb.toString());
+
+                for (Travel travel : travelsDb) {
+                    locationRepository.addLocation(
+                            new UserLocation(
+                                    locationData.getLatitude(),
+                                    locationData.getLongitude(),
+                                    LocalDateTime.now().toString(),
+                                    travel.getId()
+                            )
+                    );
+                }
+            });
+        });
+
+
     }
 
     private boolean checkRequirement(){

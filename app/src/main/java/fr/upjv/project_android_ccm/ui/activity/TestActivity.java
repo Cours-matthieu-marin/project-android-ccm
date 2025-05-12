@@ -3,6 +3,7 @@ package fr.upjv.project_android_ccm.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import fr.upjv.project_android_ccm.R;
 import fr.upjv.project_android_ccm.data.model.Travel;
@@ -31,8 +33,8 @@ public class TestActivity extends AppCompatActivity {
         LiveData<User> userLiveData = userRepo.getUser(sharedPreferences.getString("email", null));
 
         userLiveData.observe(this, user -> {
-            assert user != null;
-            Travel travel = new Travel("test travel", user.getId(), LocalDateTime.now(), null);
+            assert user.getId() != null;
+            Travel travel = new Travel("test travel", user.getId(), LocalDateTime.now().toString(), null);
             travelRepository.addTravel(travel);
 
             Intent serviceIntent = new Intent(this, LocationService.class);
