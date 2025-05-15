@@ -14,7 +14,8 @@
         android:layout_width="367dp"
         android:layout_height="60dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="4dp"
         android:background="@drawable/rectangle_new_travel"
         android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BONJOUR"
+        android:text="Nouveau Voyage !"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_6"
         app:layout_constraintEnd_toEndOf="@+id/rectangle_6"
         app:layout_constraintStart_toStartOf="@+id/rectangle_6"
@@ -40,12 +41,13 @@
         android:layout_below="@+id/rectangle_6"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:gravity="top"
         android:text="Nom du voyage *"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rectangle_6" />
 
@@ -54,12 +56,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nom_du_voya"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/rectangle_edit_text"
         android:ems="10"
         android:inputType="text"
         android:text="Nom du voyage"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nom_du_voya" />
 
@@ -70,12 +72,13 @@
         android:layout_below="@+id/editTextText_nom_du_voya"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:gravity="top"
         android:text="Date de début *"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText_nom_du_voya" />
 
@@ -84,11 +87,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/date_de_d_b"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rectangle_edit_text"
         android:ems="10"
         android:inputType="date"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="459dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
     <TextView
         android:id="@+id/date_de_fin"
@@ -97,23 +102,66 @@
         android:layout_below="@+id/date_de_d_b"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
         android:gravity="top"
         android:text="Date de fin"
         android:textColor="@color/black"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="34dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate_date_de_d_b" />
 
     <EditText
         android:id="@+id/editTextDate_date_de_fin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/date_de_fin"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rectangle_edit_text"
         android:ems="10"
         android:inputType="date"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="578dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_de_fin" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="137dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:text="Maintenant ?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_de_d_b" />
+
+    <View
+        android:id="@+id/rectangle_8"
+        android:layout_width="307dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/submit_new_travel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate_date_de_fin"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView_submit_add_travel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Créer le voyage"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangle_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rectangle_8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
