@@ -53,11 +53,6 @@ public class HomeActivity extends AppCompatActivity {
         tripListContainer = findViewById(R.id.tripListContainer);
         inflater = LayoutInflater.from(this);
 
-        // Ajoute des voyages en mode test
-//        addTrip("Voyage Maadriiiiiid", "1");
-//        addTrip("Voyage Londres", "2");
-
-        //for prod get all trips from database
         UserRepository userRepo = new UserRepository();
         TravelRepository travelRepository = new TravelRepository();
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
@@ -65,7 +60,6 @@ public class HomeActivity extends AppCompatActivity {
 
         userLiveData.observe(this, user -> {
             assert user.getId() != null;
-            //Travel travels = new Travel("test travel", user.getId(), LocalDateTime.now().toString(), null);
              travelRepository.getTravelsByUser(user.getId() , travels -> {
                 if (travels != null) {
                     for (Travel travel : travels) {
@@ -75,27 +69,21 @@ public class HomeActivity extends AppCompatActivity {
                     Toast.makeText(this, "Aucun voyage trouvé", Toast.LENGTH_SHORT).show();
                 }});
 
-//            Intent serviceIntent = new Intent(this, LocationService.class);
-//            ContextCompat.startForegroundService(this, serviceIntent);
         });
 
     }
 
     private void addTrip(String tripName, String tripId) {
-        // Créer dynamiquement un parent ConstraintLayout
         ConstraintLayout parentLayout = new ConstraintLayout(this);
         parentLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 dpToPx(81)
         ));
 
-        // Gonfler le layout tripbutton
         View tripButton = inflater.inflate(R.layout.tripbutton, parentLayout, false);
 
-        // Ajouter la vue gonflée au parent
         parentLayout.addView(tripButton);
 
-        // Modifier les éléments du layout
         TextView tripText = tripButton.findViewById(R.id.TripNameText);
         tripText.setText(tripName);
 
@@ -106,8 +94,6 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-        // Ajouter au conteneur final
         tripListContainer.addView(parentLayout);
     }
 
