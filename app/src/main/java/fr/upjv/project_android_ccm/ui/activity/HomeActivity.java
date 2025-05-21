@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton settingsBtn = findViewById(R.id.Settingsbutton);
 
         homeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, TripDetailActivity.class);
+            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
             startActivity(intent);
         });
 
