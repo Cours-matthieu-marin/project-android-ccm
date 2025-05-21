@@ -21,7 +21,7 @@ public class TripDetailActivity extends AppCompatActivity {
         // Récupérer l'ID passé via l'intent
         String tripId = getIntent().getStringExtra("tripId");
 
-        // Trouver le TextView et afficher l'ID
+        // TEST
         TextView textView = findViewById(R.id.tripIdTextView);
         textView.setText("ID du voyage reçu : " + tripId);
     }
