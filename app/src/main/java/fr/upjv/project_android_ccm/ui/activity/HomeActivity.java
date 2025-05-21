@@ -1,5 +1,6 @@
 package fr.upjv.project_android_ccm.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,13 @@ import android.content.Intent;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LiveData;
 
 import fr.upjv.project_android_ccm.R;
+import fr.upjv.project_android_ccm.data.model.Travel;
+import fr.upjv.project_android_ccm.data.model.User;
+import fr.upjv.project_android_ccm.data.repository.TravelRepository;
+import fr.upjv.project_android_ccm.data.repository.UserRepository;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -32,14 +38,14 @@ public class HomeActivity extends AppCompatActivity {
 
 //Importation Menu
         ImageButton homeBtn = findViewById(R.id.Homebutton);
-        ImageButton settingsBtn = findViewById(R.id.Settingsbutton);
+        ImageButton friendsButton = findViewById(R.id.Friendsbutton);
 
         homeBtn.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
             startActivity(intent);
         });
 
-        settingsBtn.setOnClickListener(v -> {
+        friendsButton.setOnClickListener(v -> {
             //layout settings
         });
 //Fin importation Menu
@@ -48,8 +54,31 @@ public class HomeActivity extends AppCompatActivity {
         inflater = LayoutInflater.from(this);
 
         // Ajoute des voyages en mode test
-        addTrip("Voyage Maadriiiiiid", "1");
-        addTrip("Voyage Londres", "2");
+//        addTrip("Voyage Maadriiiiiid", "1");
+//        addTrip("Voyage Londres", "2");
+
+        //for prod get all trips from database
+        UserRepository userRepo = new UserRepository();
+        TravelRepository travelRepository = new TravelRepository();
+        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        LiveData<User> userLiveData = userRepo.getUser(sharedPreferences.getString("email", null));
+
+        userLiveData.observe(this, user -> {
+            assert user.getId() != null;
+            //Travel travels = new Travel("test travel", user.getId(), LocalDateTime.now().toString(), null);
+             travelRepository.getTravelsByUser(user.getId() , travels -> {
+                if (travels != null) {
+                    for (Travel travel : travels) {
+                        addTrip(travel.getName(), travel.getId());
+                    }
+                } else {
+                    Toast.makeText(this, "Aucun voyage trouvé", Toast.LENGTH_SHORT).show();
+                }});
+
+//            Intent serviceIntent = new Intent(this, LocationService.class);
+//            ContextCompat.startForegroundService(this, serviceIntent);
+        });
+
     }
 
     private void addTrip(String tripName, String tripId) {

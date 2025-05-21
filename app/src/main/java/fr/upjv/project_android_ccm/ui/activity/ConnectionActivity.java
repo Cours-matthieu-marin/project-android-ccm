@@ -26,7 +26,7 @@ public class ConnectionActivity extends AppCompatActivity {
         String emailInPhone = sharedPreferences.getString("email", null);
 
         if (emailInPhone != null && !emailInPhone.isBlank()) {
-            Intent intent = new Intent(ConnectionActivity.this, TestActivity.class);
+            Intent intent = new Intent(ConnectionActivity.this, HomeActivity.class);
             startActivity(intent);
         }
 
@@ -52,8 +52,9 @@ public class ConnectionActivity extends AppCompatActivity {
                     editor.putString("email", email);
                     editor.apply();
                     Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ConnectionActivity.this, TestActivity.class);
+                    Intent intent = new Intent(ConnectionActivity.this, HomeActivity.class);
                     startActivity(intent);
+
                 } else {
                     Toast.makeText(this, "Échec de la connexion", Toast.LENGTH_SHORT).show();
                 }

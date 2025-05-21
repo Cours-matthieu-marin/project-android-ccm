@@ -62,29 +62,6 @@
                 app:layout_constraintStart_toEndOf="@+id/NewTripText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-            android:id="@+id/ellipse_1"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/ellipse_1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.953"
-            android:layout_marginBottom="16dp" />
-
-    <ImageView
-            android:src="@drawable/amis"
-            android:layout_width="42dp"
-            android:layout_height="59dp"
-            android:id="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/ellipse_1"
-            app:layout_constraintBottom_toBottomOf="@+id/ellipse_1"
-            app:layout_constraintEnd_toEndOf="@+id/ellipse_1"
-            app:layout_constraintStart_toStartOf="@+id/ellipse_1" />
-
     <androidx.core.widget.NestedScrollView
             android:layout_width="408dp"
             android:layout_height="404dp"
