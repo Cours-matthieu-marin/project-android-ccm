@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@color/Logincolorbackgroundandnavbar">
+
+    <ImageButton
+            android:id="@+id/Homebutton"
+            android:layout_width="49dp"
+            android:layout_height="53dp"
+            app:srcCompat="@drawable/accueil__1_"
+            android:background="@drawable/accueil__1_"
+            android:contentDescription="@string/home"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/LogoApp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.403"
+            app:layout_constraintVertical_bias="0.652" />
+
+    <ImageView
+            android:id="@+id/LogoApp"
+            android:layout_width="108dp"
+            android:layout_height="85dp"
+            android:contentDescription="@string/marcopologo_logo"
+            app:srcCompat="@drawable/chatgpt_image_2_avr__2025__10_53_32_removebg_preview__1_"
+            app:layout_constraintEnd_toStartOf="@+id/Friendsbutton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="72dp"
+            app:layout_constraintVertical_bias="0.9" />
+
+    <ImageButton
+            android:id="@+id/Friendsbutton"
+            android:layout_width="53dp"
+            android:layout_height="52dp"
+            android:background="@drawable/amis"
+            android:contentDescription="@string/settings"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintVertical_bias="0.643" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

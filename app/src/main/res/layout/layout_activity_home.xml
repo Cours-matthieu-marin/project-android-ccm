@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Backgroundframe">
+
+    <!-- Bouton "Nouveau voyage" -->
+    <include
+            layout="@layout/menu"
+            android:id="@+id/include" />
+
+    <!-- Bouton "Voyage ?? !" -->
+
+
+    <!-- Petit bouton "amis" en bas -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="350dp"
+            android:layout_height="73dp"
+            android:background="@color/addnewvoyage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="160dp"
+            app:layout_constraintHorizontal_bias="0.491">
+
+        <ImageView
+                android:id="@+id/addButtonImg"
+                android:layout_width="27dp"
+                android:layout_height="30dp"
+                android:src="@drawable/plus"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/NewTripText" />
+
+        <TextView
+                android:id="@+id/NewTripText"
+                android:layout_width="229dp"
+                android:layout_height="40dp"
+                android:text="Nouveau Voyage !"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.461"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+                android:id="@+id/Map"
+                android:layout_width="43dp"
+                android:layout_height="39dp"
+                android:src="@drawable/adresse"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/NewTripText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="408dp"
+            android:layout_height="404dp"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/nestedScrollView2">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/tripListContainer">
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:id="@+id/firsttriplayout"-->
+<!--                    android:layout_height="81dp">-->
+
+<!--                <include layout="@layout/tripbutton" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:id="@+id/secondtriplayout"-->
+<!--                    android:layout_height="86dp">-->
+
+<!--                <include layout="@layout/tripbutton" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,4 +53,10 @@ public class Travel {
     public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }
+

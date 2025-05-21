@@ -90,6 +90,46 @@ public class TravelRepository {
         return travelListData;
     }
 
+    public LiveData<List<Travel>> getTravelsByUser(String userId, Consumer<List<Travel>> callback) {
+        MutableLiveData<List<Travel>> travelListData = new MutableLiveData<>();
+
+        if (userId == null || userId.isEmpty()) {
+            travelListData.setValue(null);
+            return travelListData;
+        }
+
+        db.collection(travelsCollection)
+                .whereEqualTo("idUser", userId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        travelListData.setValue(new ArrayList<>());
+                        return;
+                    }
+
+                    List<Travel> travels = new ArrayList<>();
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        Travel travel = doc.toObject(Travel.class);
+                        if (travel != null) {
+                            travel.setId(doc.getId());
+                            travels.add(travel);
+                        } else {
+                            Log.w("travel", "Voyage null détecté dans les résultats pour l'utilisateur avec ID : " + userId);
+                        }
+                    }
+                    travelListData.setValue(travels);
+
+                    callback.accept(travels);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("travel", "Erreur lors de la récupération des voyages pour l'utilisateur : " + userId, e);
+                    travelListData.setValue(null);
+                    callback.accept(null);
+                });
+
+        return travelListData;
+    }
 
     public void addTravel(Travel travel) {
         db.collection(travelsCollection).add(travel);

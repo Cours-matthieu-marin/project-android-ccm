@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.core.app.ActivityCompat
 import fr.upjv.project_android_ccm.ui.activity.ConnectionActivity
+import fr.upjv.project_android_ccm.ui.activity.HomeActivity
+import fr.upjv.project_android_ccm.ui.activity.TestActivity
 
 
 class MainActivity : ComponentActivity() {
@@ -16,6 +18,7 @@ class MainActivity : ComponentActivity() {
 
         val intent = Intent(this, ConnectionActivity::class.java)
         startActivity(intent)
+
         ActivityCompat.requestPermissions(
             this,
             arrayOf<String>(
