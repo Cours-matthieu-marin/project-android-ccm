@@ -23,7 +23,8 @@
         android:theme="@style/Theme.Projectandroidccm"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.Add_New_Travel_Activity"
+            android:name=".ui.activity.AddNewTravelActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.activity.TestActivity"

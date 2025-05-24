@@ -10,6 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import fr.upjv.project_android_ccm.R;
+import fr.upjv.project_android_ccm.data.model.Travel;
+import fr.upjv.project_android_ccm.data.model.User;
+import fr.upjv.project_android_ccm.data.repository.TravelRepository;
+import fr.upjv.project_android_ccm.data.repository.UserRepository;
+import fr.upjv.project_android_ccm.service.LocationService;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -33,6 +38,8 @@ public class TestActivity extends AppCompatActivity {
 //        });
 
 
-//Fin importation Menu
+        Intent intent = new Intent(TestActivity.this, AddNewTravelActivity.class);
+        startActivity(intent);
+
     }
 }

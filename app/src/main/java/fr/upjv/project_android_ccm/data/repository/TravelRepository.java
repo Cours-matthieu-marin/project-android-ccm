@@ -1,4 +1,6 @@
 package fr.upjv.project_android_ccm.data.repository;
+import java.text.ParseException;
+
 
 import android.util.Log;
 
@@ -131,8 +133,16 @@ public class TravelRepository {
         return travelListData;
     }
 
-    public void addTravel(Travel travel) {
-        db.collection(travelsCollection).add(travel);
+    public void addTravel(Travel travel, Consumer<Boolean> callback) {
+        db.collection(travelsCollection)
+                .add(travel)
+                .addOnSuccessListener(documentReference -> {
+                    callback.accept(true);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Erreur lors de l'ajout du voyage", e);
+                    callback.accept(false);
+                });
     }
 
     public interface OnCompleteListener {

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/Backgroundframe"
     android:padding="16dp"
-    tools:context=".ui.activity.Add_New_Travel_Activity">
+    tools:context=".ui.activity.AddNewTravelActivity">
 
     <View
         android:id="@+id/rectangle_6"
@@ -90,10 +90,10 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/rectangle_edit_text"
         android:ems="10"
-        android:inputType="date"
+        android:inputType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_date_de_d_b" />
 
     <TextView
         android:id="@+id/date_de_fin"
@@ -120,14 +120,14 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/rectangle_edit_text"
         android:ems="10"
-        android:inputType="date"
+        android:inputType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_de_fin" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_date_de_d_b"
         android:layout_width="137dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -137,8 +137,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_de_d_b" />
 
-    <View
-        android:id="@+id/rectangle_8"
+    <Button
+        android:id="@+id/createTravelButton"
         android:layout_width="307dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
@@ -158,10 +158,10 @@
         android:text="Créer le voyage"
         android:textColor="@color/white"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/rectangle_8"
+        app:layout_constraintBottom_toBottomOf="@+id/createTravelButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rectangle_8" />
+        app:layout_constraintTop_toTopOf="@+id/createTravelButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
