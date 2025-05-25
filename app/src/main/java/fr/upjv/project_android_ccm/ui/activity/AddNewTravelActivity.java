@@ -1,6 +1,7 @@
 package fr.upjv.project_android_ccm.ui.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -44,6 +46,20 @@ public class AddNewTravelActivity extends AppCompatActivity {
         CheckBox startNow = findViewById(R.id.checkBox_date_de_d_b);
         EditText endDate = findViewById(R.id.editTextDate_date_de_fin);
         Button createTravel = findViewById(R.id.createTravelButton);
+
+        //Importation Menu
+        ImageButton homeBtn = findViewById(R.id.Homebutton);
+        ImageButton friendsButton = findViewById(R.id.Friendsbutton);
+
+        homeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(AddNewTravelActivity.this, HomeActivity.class);
+            startActivity(intent);
+        });
+
+        friendsButton.setOnClickListener(v -> {
+            //layout settings
+        });
+//Fin importation Menu
 
         createTravel.setOnClickListener(new View.OnClickListener() {
             @Override

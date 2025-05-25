@@ -1,5 +1,6 @@
 package fr.upjv.project_android_ccm.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class TestActivity extends AppCompatActivity {
 //        });
 
 
-        Intent intent = new Intent(TestActivity.this, AddNewTravelActivity.class);
+        Intent intent = new Intent(TestActivity.this.peekAvailableContext(), AddNewTravelActivity.class);
         startActivity(intent);
 
     }
