@@ -9,4 +9,5 @@
     <color name="photobackground">#9DEADC</color>
     <color name="deletebutton">#E31A1A</color>
     <color name="white">#FFF</color>
+    <color name="black">#000</color>
 </resources>

@@ -1,7 +1,11 @@
 package fr.upjv.project_android_ccm.data.model;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Travel {
     private String id;
@@ -56,6 +60,29 @@ public class Travel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public static List<Travel> filterActiveTravels(List<Travel> travels) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+        LocalDateTime now = LocalDateTime.now();
+
+        return travels.stream()
+                .filter(travel -> {
+                    try {
+                        LocalDateTime start = LocalDateTime.parse(travel.dateStart, formatter);
+
+                        if (travel.dateEnd == null || travel.dateEnd.isEmpty()) {
+                            return !now.isBefore(start); // now >= start
+                        } else {
+                            LocalDateTime end = LocalDateTime.parse(travel.dateEnd, formatter);
+                            return (!now.isBefore(start)) && now.isBefore(end); // start <= now < end
+                        }
+                    } catch (Exception e) {
+                        // Ignorer les entrées mal formatées
+                        return false;
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
 }

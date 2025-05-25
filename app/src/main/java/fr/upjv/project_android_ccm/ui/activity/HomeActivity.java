@@ -50,6 +50,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 //Fin importation Menu
 
+
+        ConstraintLayout addTravelButton = findViewById(R.id.constraintLayout2);
+
+        addTravelButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, AddNewTravelActivity.class);
+            startActivity(intent);
+        });
+
         tripListContainer = findViewById(R.id.tripListContainer);
         inflater = LayoutInflater.from(this);
 

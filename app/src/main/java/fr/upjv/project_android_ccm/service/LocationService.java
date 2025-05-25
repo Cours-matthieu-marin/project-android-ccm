@@ -145,8 +145,10 @@ public class LocationService extends Service {
                 return;
             }
 
-            travelRepository.getUnfinishedTravelsByUser(userDb.getId(), (List<Travel> travelsDb) -> {
-                for (Travel travel : travelsDb) {
+            travelRepository.getTravelsByUser(userDb.getId(), (List<Travel> travelsDb) -> {
+                Travel travelUtility = new Travel();
+                List<Travel> travelSorted = travelUtility.filterActiveTravels(travelsDb);
+                for (Travel travel : travelSorted) {
                     locationRepository.addLocation(
                             new UserLocation(
                                     locationData.getLatitude(),
