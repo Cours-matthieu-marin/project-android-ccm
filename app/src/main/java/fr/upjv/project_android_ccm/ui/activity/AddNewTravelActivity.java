@@ -39,6 +39,7 @@ public class AddNewTravelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_add_new_travel);
 
         EditText travelName = findViewById(R.id.editTextText_nom_du_voya);
@@ -57,7 +58,8 @@ public class AddNewTravelActivity extends AppCompatActivity {
         });
 
         friendsButton.setOnClickListener(v -> {
-            //layout settings
+            Intent intent = new Intent(AddNewTravelActivity.this, FriendListActivity.class);
+            startActivity(intent);
         });
 //Fin importation Menu
 

@@ -1,22 +1,25 @@
 package fr.upjv.project_android_ccm.ui.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-//import intent
-import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LiveData;
+
+import org.w3c.dom.Text;
 
 import fr.upjv.project_android_ccm.R;
 import fr.upjv.project_android_ccm.data.model.Travel;
@@ -24,60 +27,62 @@ import fr.upjv.project_android_ccm.data.model.User;
 import fr.upjv.project_android_ccm.data.repository.TravelRepository;
 import fr.upjv.project_android_ccm.data.repository.UserRepository;
 
-public class HomeActivity extends AppCompatActivity {
+public class FriendTravelActivity extends AppCompatActivity {
 
     private LinearLayout tripListContainer;
     private LayoutInflater inflater;
+    private String requiredIdFriend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         getSupportActionBar().hide();
-        setContentView(R.layout.layout_activity_home);
+        Intent ActualIntent = getIntent();
+        requiredIdFriend = ActualIntent.getStringExtra("friendId");
 
-//Importation Menu
+        if (requiredIdFriend == null) {
+            throw new IllegalArgumentException("Missing required argument: friendId");
+        }
+        setContentView(R.layout.activity_friend_travel);
+
+        //Importation Menu
         ImageButton homeBtn = findViewById(R.id.Homebutton);
         ImageButton friendsButton = findViewById(R.id.Friendsbutton);
 
         homeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
+            Intent intent = new Intent(FriendTravelActivity.this, HomeActivity.class);
             startActivity(intent);
         });
 
         friendsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, FriendListActivity.class);
+            Intent intent = new Intent(FriendTravelActivity.this, FriendListActivity.class);
             startActivity(intent);
         });
 //Fin importation Menu
 
+        TextView titleFriendTravel = findViewById(R.id.titleFriendTravel);
 
-        ConstraintLayout addTravelButton = findViewById(R.id.constraintLayout2);
+        UserRepository userRepository = new UserRepository();
+        LiveData<User> userLiveData = userRepository.getUserById(requiredIdFriend, null);
 
-        addTravelButton.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, AddNewTravelActivity.class);
-            startActivity(intent);
+        userLiveData.observe(this, user -> {
+            titleFriendTravel.setText("Les voyages de "+ user.getPseudo());
+
         });
 
         tripListContainer = findViewById(R.id.tripListContainer);
         inflater = LayoutInflater.from(this);
 
-        UserRepository userRepo = new UserRepository();
         TravelRepository travelRepository = new TravelRepository();
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-        LiveData<User> userLiveData = userRepo.getUser(sharedPreferences.getString("email", null));
-
-        userLiveData.observe(this, user -> {
-            assert user.getId() != null;
-             travelRepository.getTravelsByUser(user.getId() , travels -> {
-                if (travels != null) {
-                    for (Travel travel : travels) {
-                        addTrip(travel.getName(), travel.getId());
-                    }
-                } else {
-                    Toast.makeText(this, "Aucun voyage trouvé", Toast.LENGTH_SHORT).show();
-                }});
-
+        travelRepository.getTravelsByUser(requiredIdFriend, travels -> {
+            if (travels != null) {
+                for (Travel travel : travels) {
+                    addTrip(travel.getName(), travel.getId());
+                }
+            } else {
+                Toast.makeText(this, "Aucun voyage trouvé", Toast.LENGTH_SHORT).show();
+            }
         });
 
     }
@@ -98,9 +103,9 @@ public class HomeActivity extends AppCompatActivity {
 
         ConstraintLayout clickableTrip = tripButton.findViewById(R.id.constraintLayout3);
         clickableTrip.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, TripDetailActivity.class);
+            Intent intent = new Intent(FriendTravelActivity.this, TripDetailActivity.class);
             intent.putExtra("tripId", tripId);
-            intent.putExtra("isFriendTrip", false);
+            intent.putExtra("isFriendTrip", true);
             startActivity(intent);
         });
 

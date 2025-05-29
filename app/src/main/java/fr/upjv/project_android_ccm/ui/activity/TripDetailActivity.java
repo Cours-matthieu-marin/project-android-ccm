@@ -20,6 +20,7 @@ public class TripDetailActivity extends AppCompatActivity {
 
         // Récupérer l'ID passé via l'intent
         String tripId = getIntent().getStringExtra("tripId");
+        String isFriendTrip = getIntent().getStringExtra("isFriendTrip");
 
         // TEST
         TextView textView = findViewById(R.id.tripIdTextView);
