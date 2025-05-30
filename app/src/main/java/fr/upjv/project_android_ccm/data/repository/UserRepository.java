@@ -88,7 +88,7 @@ public LiveData<User> getUser(String userEmail) {
         }
 
         db.collection(usersCollection)
-                .whereIn("codeAmi", new ArrayList<>(friendCodes))
+                .whereIn("friendCode", new ArrayList<>(friendCodes))
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<User> users = new ArrayList<>();
@@ -109,7 +109,7 @@ public LiveData<User> getUser(String userEmail) {
 
 
 
-    public LiveData<User> getUserById(String userId, Consumer<User> callback) {
+    public LiveData<User> getUserById(String userId) {
         final MutableLiveData<User> userData = new MutableLiveData<>();
 
         db.collection(usersCollection)
@@ -120,23 +120,23 @@ public LiveData<User> getUser(String userEmail) {
                         User user = documentSnapshot.toObject(User.class);
                         if (user != null) {
                             user.setId(documentSnapshot.getId());
-                            callback.accept(user);
                             userData.setValue(user);
+                        } else {
+                            userData.setValue(null);
                         }
                     } else {
-                        Log.e("service", "User not found");
-                        callback.accept(null);
+                        Log.e("Firestore", "User not found: " + userId);
                         userData.setValue(null);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Error retrieving user", e);
-                    callback.accept(null);
+                    Log.e("Firestore", "Error retrieving user by ID", e);
                     userData.setValue(null);
                 });
 
         return userData;
     }
+
 
 
 

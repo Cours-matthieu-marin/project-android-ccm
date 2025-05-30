@@ -45,6 +45,8 @@ public class FriendListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         getSupportActionBar().hide();
+        setContentView(R.layout.activity_friend_list);
+        friendListContainer = findViewById(R.id.friendListContainer);
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         LiveData<User> userLiveData = userRepo.getUser(sharedPreferences.getString("email", null));
         userLiveData.observe(this, user -> {
@@ -83,7 +85,7 @@ public class FriendListActivity extends AppCompatActivity {
                 }
             });
 
-            setContentView(R.layout.activity_friend_list);
+
         });
 
 
@@ -110,11 +112,10 @@ public class FriendListActivity extends AppCompatActivity {
 
     private void generateFriendList(){
         reset();
-        friendListContainer = findViewById(R.id.friendListContainer);
         inflater = LayoutInflater.from(this);
-
         assert userObject.getFriendsList() != null;
         userRepo.getUsersByFriendCodes(userObject.getFriendsList()).observe(this, users -> {
+
             for(User friend : users){
                 addFriend(friend.getId());
             }
@@ -127,7 +128,7 @@ public class FriendListActivity extends AppCompatActivity {
 
 
     private void addFriend(String friendId) {
-        LiveData<User> userLiveData = userRepo.getUserById(friendId, null);
+        LiveData<User> userLiveData = userRepo.getUserById(friendId);
 
         userLiveData.observe(this, user -> {
             ConstraintLayout parentLayout = new ConstraintLayout(this);

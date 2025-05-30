@@ -64,11 +64,17 @@ public class FriendTravelActivity extends AppCompatActivity {
         TextView titleFriendTravel = findViewById(R.id.titleFriendTravel);
 
         UserRepository userRepository = new UserRepository();
-        LiveData<User> userLiveData = userRepository.getUserById(requiredIdFriend, null);
+        LiveData<User> userLiveData = userRepository.getUserById(requiredIdFriend);
 
         userLiveData.observe(this, user -> {
-            titleFriendTravel.setText("Les voyages de "+ user.getPseudo());
-
+            if (user != null && user.getPseudo() != null) {
+                String pseudo = user.getPseudo().trim();
+                System.out.println("bjr");
+                System.out.println("Pseudo : [" + pseudo + "]");
+                System.out.println("Longueur : " + pseudo.length());
+                String titleFriendTravelText = "Les voyages de " + pseudo;
+                titleFriendTravel.setText(titleFriendTravelText);
+            }
         });
 
         tripListContainer = findViewById(R.id.tripListContainer);

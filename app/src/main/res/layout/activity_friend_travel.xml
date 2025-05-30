@@ -26,17 +26,25 @@
         <TextView
             android:id="@+id/titleFriendTravel"
             android:layout_width="229dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="Les voyages de ..."
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="28sp"
             android:textStyle="bold"
+            android:maxLines="1"
+
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeMaxTextSize="28sp"
+            android:autoSizeStepGranularity="1sp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.247"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.484" />
+            app:layout_constraintVertical_bias="0.484"
+            />
+
 
         <ImageView
             android:id="@+id/Map"
