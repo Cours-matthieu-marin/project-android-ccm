@@ -27,14 +27,13 @@
             android:src="@drawable/oeil"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/TripNameText" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
-            android:id="@+id/TripNameText"
+            android:id="@+id/FriendNameText"
             android:layout_width="229dp"
             android:layout_height="40dp"
-            android:text="Voyage ?? !"
+            android:text="Tu as un ami ???"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textStyle="bold"
             android:textSize="28sp"
@@ -45,13 +44,12 @@
             android:autoSizeTextType="uniform" />
 
         <ImageView
-            android:id="@+id/MapImg2"
+            android:id="@+id/FriendImg2"
             android:layout_width="43dp"
             android:layout_height="39dp"
-            android:src="@drawable/adresse"
+            android:src="@drawable/amis"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/TripNameText" />
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

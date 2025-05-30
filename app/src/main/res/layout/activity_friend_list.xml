@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.FriendListActivity"
+    android:background="@color/Backgroundframe">
+
+    <include
+        layout="@layout/menu"
+        android:id="@+id/include" />
+
+
+    <TextView
+        android:id="@+id/nom_du_voya"
+        android:layout_width="162dp"
+        android:layout_height="29dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="156dp"
+        android:gravity="top"
+        android:text="Votre code ami : "
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/copyButton"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="148dp"
+        android:background="@drawable/copie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintStart_toEndOf="@+id/nom_du_voya"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextText_nom_du_voya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nom_du_voya"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rectangle_edit_text"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Code du futur ami"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nom_du_voya" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/addnewvoyage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText_nom_du_voya">
+
+        <ImageView
+            android:id="@+id/addButtonImg"
+            android:layout_width="27dp"
+            android:layout_height="30dp"
+            android:src="@drawable/plus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/NewTripText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/NewTripText"
+            android:layout_width="229dp"
+            android:layout_height="40dp"
+            android:text="Ajout d'un amis"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.461" />
+
+        <ImageView
+            android:id="@+id/Map"
+            android:layout_width="43dp"
+            android:layout_height="39dp"
+            android:src="@drawable/amis"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/NewTripText"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="408dp"
+        android:layout_height="404dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/nestedScrollView2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/friendListContainer">
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

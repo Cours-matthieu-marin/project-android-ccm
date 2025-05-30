@@ -1,16 +1,21 @@
 package fr.upjv.project_android_ccm.data.model;
 
+
+import java.util.List;
+
 public class User {
     private String id;
     private String email;
     private String pseudo;
     private String friendCode;
+    private List<String> friendsList;
 
-    public User(String id, String email, String pseudo, String friendCode) {
+    public User(String id, String email, String pseudo, String friendCode, List<String> friendsList) {
         this.id = id;
         this.email = email;
         this.pseudo = pseudo;
         this.friendCode = friendCode;
+        this.friendsList = friendsList;
     }
     public User() {
     }
@@ -50,5 +55,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<String> getFriendsList() {
+        return friendsList;
+    }
+
+    public void addFriendCode(String friendCode){
+        this.friendsList.add(friendCode);
     }
 }
