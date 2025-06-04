@@ -35,6 +35,7 @@ public class TravelRepository {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             Travel travel = documentSnapshot.toObject(Travel.class);
+                            travel.setId(documentSnapshot.getId());
                             travelData.setValue(travel);
                         } else {
                             travelData.setValue(null);
@@ -73,6 +74,7 @@ public class TravelRepository {
                     List<Travel> travels = new ArrayList<>();
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         Travel travel = doc.toObject(Travel.class);
+                        travel.setId(doc.getId());
                         if (travel != null) {
                             travels.add(travel);
                         } else {
