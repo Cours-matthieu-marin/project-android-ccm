@@ -22,6 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectandroidccm"
         tools:targetApi="31">
+
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyB4pffns2cHTlynQua9WRZ2HN8Ye1TeWXI"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
