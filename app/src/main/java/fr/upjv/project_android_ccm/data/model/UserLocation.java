@@ -8,7 +8,7 @@ public class UserLocation {
     private double longitude;
     private String date;
     private String idVoyage;
-
+    public UserLocation() {}
     public UserLocation(double latitude, double longitude, String date, String idVoyage) {
         this.latitude = latitude;
         this.longitude = longitude;
