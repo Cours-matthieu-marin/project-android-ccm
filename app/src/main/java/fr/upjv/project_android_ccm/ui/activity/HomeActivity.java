@@ -2,6 +2,7 @@ package fr.upjv.project_android_ccm.ui.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
              travelRepository.getTravelsByUser(user.getId() , travels -> {
                 if (travels != null) {
                     for (Travel travel : travels) {
-                        addTrip(travel.getName(), travel.getId());
+                        addTrip(travel.getName(), travel.getId() , travel.getDateEnd() , travel.getDateStart());
                     }
                 } else {
                     Toast.makeText(this, "Aucun voyage trouvé", Toast.LENGTH_SHORT).show();
@@ -82,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void addTrip(String tripName, String tripId) {
+    private void addTrip(String tripName, String tripId , String dateEnd , String dateStart) {
         ConstraintLayout parentLayout = new ConstraintLayout(this);
         parentLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -92,6 +93,8 @@ public class HomeActivity extends AppCompatActivity {
         View tripButton = inflater.inflate(R.layout.tripbutton, parentLayout, false);
 
         parentLayout.addView(tripButton);
+        ConstraintLayout tripButtonLayout = tripButton.findViewById(R.id.constraintLayout3);
+        //change backgroundcolor if trip is finish if date end is not null ou que la date end est passé
 
         TextView tripText = tripButton.findViewById(R.id.TripNameText);
         tripText.setText(tripName);
