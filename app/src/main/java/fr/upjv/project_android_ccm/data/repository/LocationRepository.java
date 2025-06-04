@@ -31,6 +31,7 @@ public class LocationRepository {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             UserLocation location = documentSnapshot.toObject(UserLocation.class);
+                            location.setId(documentSnapshot.getId());
                             locationData.setValue(location);
                         } else {
                             locationData.setValue(null);
