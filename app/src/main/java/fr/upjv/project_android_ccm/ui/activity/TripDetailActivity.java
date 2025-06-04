@@ -1,6 +1,8 @@
 package fr.upjv.project_android_ccm.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,14 +19,26 @@ public class TripDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_detail);
+//Importation Menu
+        ImageButton homeBtn = findViewById(R.id.Homebutton);
+        ImageButton friendsButton = findViewById(R.id.Friendsbutton);
 
-        // Récupérer l'ID passé via l'intent
+        homeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(TripDetailActivity.this, HomeActivity.class);
+            startActivity(intent);
+        });
+
+        friendsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(TripDetailActivity.this, FriendListActivity.class);
+            startActivity(intent);
+        });
+//Fin importation Menu
         String tripId = getIntent().getStringExtra("tripId");
-        // pour voir si c'est le voyage d'un ami
         String isFriendTrip = getIntent().getStringExtra("isFriendTrip");
 
-        // TEST
+
         TextView textView = findViewById(R.id.tripIdTextView);
         textView.setText("ID du voyage reçu : " + tripId);
+
     }
 }
