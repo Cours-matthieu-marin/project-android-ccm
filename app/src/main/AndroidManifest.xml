@@ -31,7 +31,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
+        <activity
+                android:name=".ui.activity.TripDetailActivity"
+                android:exported="false"
+                android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".ui.activity.FriendTravelActivity"
             android:exported="false"
