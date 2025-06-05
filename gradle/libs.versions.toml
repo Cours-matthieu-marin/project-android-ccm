@@ -25,7 +25,9 @@ legacySupportV4 = "1.0.0"
 
 
 
+
 [libraries]
+maps = "com.google.android.gms:play-services-maps:18.2.0"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -53,7 +55,6 @@ play-services-auth = { module = "com.google.android.gms:play-services-auth", ver
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
-maps = "com.google.android.gms:play-services-maps:18.2.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
