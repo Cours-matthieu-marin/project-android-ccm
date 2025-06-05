@@ -65,12 +65,14 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
             startActivity(intent);
         });
 //Fin importation Menu
+        boolean isFriendTrip = getIntent().getBooleanExtra("isFriendTrip", false);
 
         tripId = getIntent().getStringExtra("tripId");
         tripName = getIntent().getStringExtra("tripName");
         dateEnd = getIntent().getStringExtra("dateEnd");
         dateStart = getIntent().getStringExtra("dateStart");
         tripStatus = getIntent().getStringExtra("tripStatus");
+        //frind
 
         locationRepository = new LocationRepository();
 
@@ -82,10 +84,16 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
 
         TextView textViewTripName = findViewById(R.id.TripName );
         if (tripName != null && !tripName.isEmpty()) {
-            textViewTripName.setText("Voyage "+ tripName);
+            if (isFriendTrip) {
+                String friendPseudo = getIntent().getStringExtra("friendName");
+                textViewTripName.setText("Voyage de "+ friendPseudo +" : " + tripName);
+            } else {
+                textViewTripName.setText("Voyage " + tripName);
+            }
         } else {
             textViewTripName.setText("Voyage sans nom");
         }
+
         ongoingSection = findViewById(R.id.ongoingSection);
 
         finishedSection = findViewById(R.id.finishedSection);
@@ -94,33 +102,41 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
         dateStartText3 = findViewById(R.id.dateStartText3);
 
         if ("ongoing".equals(tripStatus)) {
-            ongoingSection.setVisibility(android.view.View.VISIBLE);
-            Button endTripButton = findViewById(R.id.endTripButton);
-            endTripButton.setOnClickListener(v -> {
-                LocalDateTime now = LocalDateTime.now();
-                String nowFormatted = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"));
+            if (isFriendTrip) {
+                ongoingSection.setVisibility(android.view.View.GONE);
+            }
+            else {
+                ongoingSection.setVisibility(android.view.View.VISIBLE);
+                Button endTripButton = findViewById(R.id.endTripButton);
+                endTripButton.setOnClickListener(v -> {
+                    LocalDateTime now = LocalDateTime.now();
+                    String nowFormatted = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"));
 
-                TravelRepository travelRepository = new TravelRepository();
-                travelRepository.endTrip(tripId, nowFormatted, success -> {
-                    if (success) {
-                        Toast.makeText(this, "Voyage terminé !", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(TripDetailActivity.this, HomeActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(this, "Erreur lors de la fin du voyage.", Toast.LENGTH_SHORT).show();
-                    }
+                    TravelRepository travelRepository = new TravelRepository();
+                    travelRepository.endTrip(tripId, nowFormatted, success -> {
+                        if (success) {
+                            Toast.makeText(this, "Voyage terminé !", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(TripDetailActivity.this, HomeActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(this, "Erreur lors de la fin du voyage.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 });
-            });
 
 
-            finishedSection.setVisibility(android.view.View.GONE);
+                finishedSection.setVisibility(android.view.View.GONE);
+            }
         } else {
             ongoingSection.setVisibility(android.view.View.GONE);
             finishedSection.setVisibility(android.view.View.VISIBLE);
             //DELETE BUTTON
             Button deleteButton = findViewById(R.id.deleteButton);
+            if (isFriendTrip) {
+                deleteButton.setVisibility(android.view.View.GONE);
+            }else {
             deleteButton.setOnClickListener(v -> {
                 new android.app.AlertDialog.Builder(this)
                         .setTitle("Confirmation")
@@ -150,6 +166,7 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
                         .setNegativeButton("Annuler", null)
                         .show();
             });
+            }
 
 
             //EXPORT BUTTON
