@@ -10,4 +10,6 @@
     <color name="deletebutton">#E31A1A</color>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    <color name="voyageboutonfin">#7AA095</color>
+    <color name="voyageboutonfutur">#C2C2C2</color>
 </resources>
