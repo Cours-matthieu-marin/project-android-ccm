@@ -63,13 +63,14 @@ public class Travel {
     }
 
     public static List<Travel> filterActiveTravels(List<Travel> travels) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
         return travels.stream()
                 .filter(travel -> {
                     try {
                         LocalDateTime start = LocalDateTime.parse(travel.dateStart, formatter);
+                        System.out.println(travel.dateEnd == null || travel.dateEnd.isEmpty());
 
                         if (travel.dateEnd == null || travel.dateEnd.isEmpty()) {
                             return !now.isBefore(start); // now >= start
@@ -79,6 +80,8 @@ public class Travel {
                         }
                     } catch (Exception e) {
                         // Ignorer les entrées mal formatées
+                        System.out.println("prout");
+                        System.out.println(e.getMessage());
                         return false;
                     }
                 })

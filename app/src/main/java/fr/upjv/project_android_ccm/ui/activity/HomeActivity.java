@@ -1,5 +1,7 @@
 package fr.upjv.project_android_ccm.ui.activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.content.Intent;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import java.time.LocalDateTime;
@@ -28,6 +31,7 @@ import fr.upjv.project_android_ccm.data.model.Travel;
 import fr.upjv.project_android_ccm.data.model.User;
 import fr.upjv.project_android_ccm.data.repository.TravelRepository;
 import fr.upjv.project_android_ccm.data.repository.UserRepository;
+import fr.upjv.project_android_ccm.service.LocationService;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -85,7 +89,24 @@ public class HomeActivity extends AppCompatActivity {
 
         });
 
+        if (!isServiceRunning(LocationService.class)) {
+            Intent intent = new Intent(this, LocationService.class);
+            ContextCompat.startForegroundService(this, intent);
+        }
+
+
     }
+
+    private boolean isServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void addTrip(String tripName, String tripId , String dateEnd , String dateStart) {
         ConstraintLayout parentLayout = new ConstraintLayout(this);

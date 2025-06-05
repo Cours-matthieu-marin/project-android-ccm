@@ -41,7 +41,7 @@ public class LocationService extends Service {
 
     private ScheduledExecutorService executorService;
     private LocationManager locationManager;
-    private boolean isRunning = false;
+    public static boolean isRunning = false;
 
 
     @Override
@@ -57,6 +57,8 @@ public class LocationService extends Service {
         if (!checkRequirement()) {
             return START_STICKY;
         }
+        if (LocationService.isRunning) return START_STICKY;
+        LocationService.isRunning = true;
 
         isRunning = true;
         executorService.scheduleWithFixedDelay(() -> {
@@ -124,8 +126,8 @@ public class LocationService extends Service {
         }
 
         Notification notification = new NotificationCompat.Builder(this, channelId)
-                .setContentTitle("")
-                .setContentText("")
+                .setContentTitle("Carnet de Voyage")
+                .setContentText("Le service de localisation est actif")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setOngoing(true)
@@ -147,6 +149,7 @@ public class LocationService extends Service {
 
             travelRepository.getTravelsByUser(userDb.getId(), (List<Travel> travelsDb) -> {
                 Travel travelUtility = new Travel();
+
                 List<Travel> travelSorted = travelUtility.filterActiveTravels(travelsDb);
                 for (Travel travel : travelSorted) {
                     locationRepository.addLocation(
@@ -197,6 +200,16 @@ public class LocationService extends Service {
 
         return internetPermission && fineLocationPermission && coarseLocationPermission && !emailNotExist && !isRunning;
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.shutdown();
+        }
+        isRunning = false;
+        Log.d("LocationService", "Service destroyed");
+    }
+
 
 
     @Nullable
