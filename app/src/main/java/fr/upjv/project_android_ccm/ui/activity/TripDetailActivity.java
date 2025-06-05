@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,19 +27,25 @@ import android.location.Location;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 
-
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import fr.upjv.project_android_ccm.R;
 import fr.upjv.project_android_ccm.data.model.UserLocation;
 import fr.upjv.project_android_ccm.data.repository.LocationRepository;
+import fr.upjv.project_android_ccm.data.repository.TravelRepository;
+import fr.upjv.project_android_ccm.utils.TravelExporter;
 
 public class TripDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private LocationRepository locationRepository;
-    private String tripId;
-    private TextView textView;
+    private String tripId, tripName, dateStart, dateEnd, tripStatus;
+
+    private TextView  distanceText, dateStartText2, dateStartText3;
+    private android.view.View ongoingSection, finishedSection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,11 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
 //Fin importation Menu
 
         tripId = getIntent().getStringExtra("tripId");
+        tripName = getIntent().getStringExtra("tripName");
+        dateEnd = getIntent().getStringExtra("dateEnd");
+        dateStart = getIntent().getStringExtra("dateStart");
+        tripStatus = getIntent().getStringExtra("tripStatus");
+
         locationRepository = new LocationRepository();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -68,8 +80,141 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
             mapFragment.getMapAsync(this);
         }
 
+        TextView textViewTripName = findViewById(R.id.TripName );
+        if (tripName != null && !tripName.isEmpty()) {
+            textViewTripName.setText("Voyage "+ tripName);
+        } else {
+            textViewTripName.setText("Voyage sans nom");
+        }
+        ongoingSection = findViewById(R.id.ongoingSection);
 
-        textView = findViewById(R.id.tripIdTextView);
+        finishedSection = findViewById(R.id.finishedSection);
+        distanceText = findViewById(R.id.dateStartText4);
+        dateStartText2 = findViewById(R.id.dateStartText2);
+        dateStartText3 = findViewById(R.id.dateStartText3);
+
+        if ("ongoing".equals(tripStatus)) {
+            ongoingSection.setVisibility(android.view.View.VISIBLE);
+            Button endTripButton = findViewById(R.id.endTripButton);
+            endTripButton.setOnClickListener(v -> {
+                LocalDateTime now = LocalDateTime.now();
+                String nowFormatted = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"));
+
+                TravelRepository travelRepository = new TravelRepository();
+                travelRepository.endTrip(tripId, nowFormatted, success -> {
+                    if (success) {
+                        Toast.makeText(this, "Voyage terminé !", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(TripDetailActivity.this, HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Erreur lors de la fin du voyage.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
+
+            finishedSection.setVisibility(android.view.View.GONE);
+        } else {
+            ongoingSection.setVisibility(android.view.View.GONE);
+            finishedSection.setVisibility(android.view.View.VISIBLE);
+            //DELETE BUTTON
+            Button deleteButton = findViewById(R.id.deleteButton);
+            deleteButton.setOnClickListener(v -> {
+                new android.app.AlertDialog.Builder(this)
+                        .setTitle("Confirmation")
+                        .setMessage("Voulez-vous vraiment supprimer ce voyage et toutes ses localisations ?")
+                        .setPositiveButton("Oui", (dialog, which) -> {
+                            LocationRepository locationRepository = new LocationRepository();
+                            TravelRepository travelRepository = new TravelRepository();
+
+                            locationRepository.deleteLocationsByTripId(tripId, locSuccess -> {
+                                if (locSuccess) {
+                                    travelRepository.deleteTrip(tripId, tripSuccess -> {
+                                        if (tripSuccess) {
+                                            Toast.makeText(this, "Voyage supprimé", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(TripDetailActivity.this, HomeActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(this, "Erreur lors de la suppression du voyage", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(this, "Erreur lors de la suppression des localisations", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        })
+                        .setNegativeButton("Annuler", null)
+                        .show();
+            });
+
+
+            //EXPORT BUTTON
+            Button exportButton = findViewById(R.id.exportButton);
+
+            exportButton.setOnClickListener(v -> {
+                if (tripId == null || tripId.isEmpty()) {
+                    Toast.makeText(this, "Aucun voyage sélectionné", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                locationRepository.getLocationsByTripId(tripId, locations -> {
+                    if (locations == null || locations.isEmpty()) {
+                        Toast.makeText(this, "Aucune localisation à exporter", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    String[] formats = {"GPX", "KML"};
+                    new androidx.appcompat.app.AlertDialog.Builder(this)
+                            .setTitle("Choisir le format d'exportation")
+                            .setItems(formats, (dialog, whichFormat) -> {
+                                String extension = (whichFormat == 0) ? ".gpx" : ".kml";
+                                String fileName = "travel_" + tripId + extension;
+                                TravelExporter exporter = new TravelExporter(locations);
+
+                                // ⚙️ Deuxième popup : Partager ou Télécharger
+                                String[] actions = {"Partager", "Télécharger"};
+                                new androidx.appcompat.app.AlertDialog.Builder(this)
+                                        .setTitle("Action à effectuer")
+                                        .setItems(actions, (dialog2, whichAction) -> {
+                                            try {
+                                                // Générer le fichier
+                                                if (extension.equals(".gpx")) {
+                                                    exporter.exportAsGpx(this, fileName);
+                                                } else {
+                                                    exporter.exportAsKml(this, fileName);
+                                                }
+
+                                                if (whichAction == 0) {
+                                                    // 📤 Partager
+                                                    exporter.sendFileByEmail(this, fileName, "");
+                                                } else {
+                                                    // 💾 Télécharger
+                                                    Toast.makeText(this, "Fichier enregistré dans :\n" + getExternalFilesDir(null) + "/" + fileName, Toast.LENGTH_LONG).show();
+                                                }
+
+                                            } catch (IOException e) {
+                                                Toast.makeText(this, "Erreur export : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                e.printStackTrace();
+                                            }
+                                        })
+                                        .setNegativeButton("Annuler", null)
+                                        .show();
+                            })
+                            .setNegativeButton("Annuler", null)
+                            .show();
+                });
+            });
+
+
+
+            dateStartText2.setText(formatDate(dateStart));
+            dateStartText3.setText(formatDate(dateEnd));
+        }
+
     }
 
     @Override
@@ -115,7 +260,7 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
                             color = BitmapDescriptorFactory.HUE_RED;
                         } else {
                             title = "Arrêt : " + formattedDate;
-                            color = BitmapDescriptorFactory.HUE_AZURE; // ou YELLOW / ORANGE
+                            color = BitmapDescriptorFactory.HUE_AZURE;
                         }
 
                         mMap.addMarker(new MarkerOptions()
@@ -139,8 +284,7 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
                         totalDistanceMeters += result[0];
                     }
                     float totalDistanceKm = totalDistanceMeters / 1000f;
-                    Log.d("DISTANCE", "Distance totale : " + totalDistanceKm + " km");
-                    textView.setText("Distance totale : " + String.format("%.2f", totalDistanceKm) + " km");
+                    distanceText.setText(String.format(Locale.FRANCE, "%.0f Km", totalDistanceKm));
 
                     mMap.addPolyline(polylineOptions);
 
@@ -149,7 +293,7 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
                         boundsBuilder.include(new LatLng(loc.getLatitude(), loc.getLongitude()));
                     }
                     LatLngBounds bounds = boundsBuilder.build();
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100)); // 100 = padding (px)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
 
                 } else {
                     Log.w("MAP", "Aucune localisation à afficher");
@@ -161,5 +305,13 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-
+    private String formatDate(String rawDate) {
+        try {
+            DateTimeFormatter input = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+            DateTimeFormatter output = DateTimeFormatter.ofPattern("dd/MM/yy HH'h'mm", Locale.FRANCE);
+            return LocalDateTime.parse(rawDate, input).format(output);
+        } catch (Exception e) {
+            return rawDate;
+        }
+    }
 }
