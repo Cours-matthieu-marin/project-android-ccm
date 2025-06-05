@@ -98,6 +98,23 @@ public class LocationRepository {
 
         return locationListData;
     }
+    public void deleteLocationsByTripId(String tripId, Consumer<Boolean> callback) {
+        db.collection("locations")
+                .whereEqualTo("tripId", tripId)
+                .get()
+                .addOnSuccessListener(query -> {
+                    for (DocumentSnapshot doc : query.getDocuments()) {
+                        doc.getReference().delete();
+                    }
+                    callback.accept(true);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("location", "Erreur lors de la suppression des localisations", e);
+                    callback.accept(false);
+                });
+    }
+
+
     public interface OnCompleteListener {
         void onComplete(boolean success);
     }
