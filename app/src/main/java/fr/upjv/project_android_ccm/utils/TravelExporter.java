@@ -3,6 +3,7 @@ package fr.upjv.project_android_ccm.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 
 import androidx.core.content.FileProvider;
 
@@ -76,7 +77,9 @@ public class TravelExporter {
     }
 
     private void writeToFile(String content, Context context, String fileName) throws IOException {
-        File file = new File(context.getExternalFilesDir(null), fileName);
+        //File file = new File(context.getExternalFilesDir(null), fileName);
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+
         try (FileWriter writer = new FileWriter(file)) {
             writer.write(content);
         }

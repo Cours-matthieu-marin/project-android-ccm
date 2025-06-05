@@ -147,6 +147,28 @@ public class TravelRepository {
                 });
     }
 
+    public void endTrip(String travelId, String endDate, Consumer<Boolean> callback) {
+        db.collection(travelsCollection)
+                .document(travelId)
+                .update("dateEnd", endDate)
+                .addOnSuccessListener(unused -> callback.accept(true))
+                .addOnFailureListener(e -> {
+                    Log.e("travel", "Erreur lors de la mise à jour du voyage terminé", e);
+                    callback.accept(false);
+                });
+    }
+
+    public void deleteTrip(String travelId, Consumer<Boolean> callback) {
+        db.collection(travelsCollection)
+                .document(travelId)
+                .delete()
+                .addOnSuccessListener(unused -> callback.accept(true))
+                .addOnFailureListener(e -> {
+                    Log.e("travel", "Erreur lors de la suppression du voyage", e);
+                    callback.accept(false);
+                });
+    }
+
     public interface OnCompleteListener {
         void onComplete(boolean success);
     }
