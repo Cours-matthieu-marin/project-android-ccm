@@ -19,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import fr.upjv.project_android_ccm.R;
 import fr.upjv.project_android_ccm.data.model.Travel;
 import fr.upjv.project_android_ccm.data.model.User;
@@ -91,21 +95,73 @@ public class HomeActivity extends AppCompatActivity {
         ));
 
         View tripButton = inflater.inflate(R.layout.tripbutton, parentLayout, false);
-
         parentLayout.addView(tripButton);
         ConstraintLayout tripButtonLayout = tripButton.findViewById(R.id.constraintLayout3);
-        //change backgroundcolor if trip is finish if date end is not null ou que la date end est passé
+        String tripStatus = "ongoing";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        try {
+            LocalDateTime now = LocalDateTime.now();
+
+            if (dateStart != null && !dateStart.isEmpty()) {
+                LocalDateTime startDate = LocalDateTime.parse(dateStart.substring(0, 19), formatter);
+
+                if (dateEnd != null && !dateEnd.isEmpty()) {
+                    LocalDateTime endDate = LocalDateTime.parse(dateEnd.substring(0, 19), formatter);
+
+                    if (now.isBefore(startDate)) {
+                        tripButtonLayout.setBackgroundColor(getResources().getColor(R.color.voyageboutonfutur));
+                        tripStatus = "future";
+                    } else if (now.isAfter(endDate)) {
+                        tripButtonLayout.setBackgroundColor(getResources().getColor(R.color.voyageboutonfin));
+                        tripStatus = "finished";
+                    } else {
+                        tripButtonLayout.setBackgroundColor(getResources().getColor(R.color.voyagebutton));
+                        tripStatus = "ongoing";
+                    }
+                } else {
+                    if (now.isBefore(startDate)) {
+                        tripButtonLayout.setBackgroundColor(getResources().getColor(R.color.voyageboutonfutur));
+                        tripStatus = "future";
+                    } else {
+                        tripButtonLayout.setBackgroundColor(getResources().getColor(R.color.voyagebutton));
+                        tripStatus = "ongoing";
+                    }
+                }
+            } else {
+                tripButtonLayout.setBackgroundColor(getResources().getColor(R.color.voyageboutonfin));
+                tripStatus = "finished";
+            }
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            tripButtonLayout.setBackgroundColor(getResources().getColor(R.color.voyagebutton));
+            tripStatus = "ongoing";
+        }
+
+
+
+
+
 
         TextView tripText = tripButton.findViewById(R.id.TripNameText);
         tripText.setText(tripName);
 
         ConstraintLayout clickableTrip = tripButton.findViewById(R.id.constraintLayout3);
-        clickableTrip.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, TripDetailActivity.class);
-            intent.putExtra("tripId", tripId);
-            intent.putExtra("isFriendTrip", false);
-            startActivity(intent);
-        });
+        //pas de on click si le voyage est a venir
+        if (!tripStatus.equals("future")) {
+            String finalTripStatus = tripStatus;
+            clickableTrip.setOnClickListener(v -> {
+                Intent intent = new Intent(HomeActivity.this, TripDetailActivity.class);
+                intent.putExtra("tripId", tripId);
+                intent.putExtra("isFriendTrip", false);
+                intent.putExtra("tripName", tripName);
+                intent.putExtra("dateEnd", dateEnd);
+                intent.putExtra("dateStart", dateStart);
+                intent.putExtra("tripStatus", finalTripStatus);
+                startActivity(intent);
+            });
+        }
+
 
         tripListContainer.addView(parentLayout);
     }
