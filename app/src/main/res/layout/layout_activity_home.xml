@@ -64,12 +64,13 @@
 
     <androidx.core.widget.NestedScrollView
             android:layout_width="408dp"
-            android:layout_height="404dp"
+            android:layout_height="0dp"
             android:fillViewport="true"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/nestedScrollView2">
+            android:id="@+id/nestedScrollView2"
+            app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -77,21 +78,21 @@
                 android:orientation="vertical"
                 android:id="@+id/tripListContainer">
 
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:id="@+id/firsttriplayout"-->
-<!--                    android:layout_height="81dp">-->
+            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:id="@+id/firsttriplayout"-->
+            <!--                    android:layout_height="81dp">-->
 
-<!--                <include layout="@layout/tripbutton" />-->
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--                <include layout="@layout/tripbutton" />-->
+            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:id="@+id/secondtriplayout"-->
-<!--                    android:layout_height="86dp">-->
+            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:id="@+id/secondtriplayout"-->
+            <!--                    android:layout_height="86dp">-->
 
-<!--                <include layout="@layout/tripbutton" />-->
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--                <include layout="@layout/tripbutton" />-->
+            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
