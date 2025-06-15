@@ -323,12 +323,20 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
 
 
     private String formatDate(String rawDate) {
-        try {
-            DateTimeFormatter input = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
-            DateTimeFormatter output = DateTimeFormatter.ofPattern("dd/MM/yy HH'h'mm", Locale.FRANCE);
-            return LocalDateTime.parse(rawDate, input).format(output);
-        } catch (Exception e) {
-            return rawDate;
+        String[] patterns = {
+                "yyyy-MM-dd'T'HH:mm:ss.SSSSSS",
+                "yyyy-MM-dd'T'HH:mm:ss"
+        };
+        DateTimeFormatter output = DateTimeFormatter.ofPattern("dd/MM/yy HH'h'mm", Locale.FRANCE);
+
+        for (String pattern : patterns) {
+            try {
+                DateTimeFormatter input = DateTimeFormatter.ofPattern(pattern);
+                return LocalDateTime.parse(rawDate, input).format(output);
+            } catch (Exception ignored) {
+            }
         }
+
+        return rawDate;
     }
 }
